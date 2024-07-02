@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    width: 350px;
+    height: 250px;
+    border: 2px ridge black;
+
+  }
+  #image{
+    justify-self: center;
+    align-self: center;
+    width: 70px;
+    height: 70px;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <div id="img"></div>
+
+      <div id="followers"></div>
+    </div>
+  </div>
+</body>
+<script>
+  const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
+  const xmlr = new XMLHttpRequest();
+  xmlr.open('GET', requestUrl)
+  let dp;
+  let follower;
+  xmlr.onreadystatechange = function () {
+    console.log(xmlr.readyState);
+    if (xmlr.readyState === 4) {
+      const data = JSON.parse(this.responseText)
+      follower = data.followers
+      dp = data.avatar_url
+      console.log(data.followers);
+      document.querySelector('#img').innerHTML = `<img id="image" src="${dp}" alt="">`;
+      document.querySelector('#followers').innerHTML = `<p>Followers = ${follower}</p>`;
+    
+    }
+  }
+  xmlr.send()
+</script>
+
+</html>
